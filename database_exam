@@ -1,0 +1,65 @@
+create DATABASE SIAS;#创建表
+use SIAS#使用数据库
+
+CREATE TABLE IF NOT EXISTS Student(
+Sno INT UNSIGNED AUTO_INCREMENT,
+Sname VARVHAR(10) NOT NULL,
+Sex VARCHAR(5) NOT NULL,
+Sage INT NOT NULL,
+Sdept VARCHAR(5) NOT NULL,
+PRIMARY KEY(Sno)
+)
+CHARSET=utf8;
+#创建学生表表
+
+CREATE TABLE IF NOT EXISTS Course(
+Cno INT UNSIGNED AUTO_INCREMENT,
+Cname VARCHAR(10) NOT NULL,
+Cpno INT,
+Ccredit INT NOT NULL,
+PRIMARY KEY(Cno)
+)
+CHARSET=utf8;
+#创建课程表
+
+CREATE TABLE IF NOT EXISTS SC(
+Sno INT UNSIGNED AUTO_INCREMENT,
+Cno INT NOT NULL,
+Grade INT NOT NULL,
+foreign key(Sno) references Student(Sno)
+);
+
+INSERT INTO Student 
+(Sno, Sname, Ssex, Sage, Sdept)
+VALUES
+(201215121, "liyong", "male", 20, "CS"),
+(201215122, "liuchen", "fama", 19, "CS"),
+(201215123, "wangmin", "fama", 18, "MA"),
+(201215125, "zhangli", "male", 19, "IS");
+
+
+INSERT INTO Course 
+(Cno, Cname, Cpno, Ccredit)
+VALUES
+(1, "db", 5, 4),
+(2, "math",null , 2),
+(3, "info", 1, 4),
+(4, "system", 6, 3),
+(5, "c", 7, 4),
+(6, "dp", null, 2),
+(7, "pasca", 6, 4);
+
+INSERT INTO SC 
+(Sno, Cno, Grade)
+VALUES
+(201215121, 1,92),
+(201215121,2,85),
+(201215121, 3,88),
+(201215122, 2,90),
+(201215122, 3,80);
+
+练习2
+SELECT * FROM Student WHERE Sname like 'liu' order by Sno;
+
+练习2
+SELECT  FROM Student WHERE 
