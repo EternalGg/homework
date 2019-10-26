@@ -74,4 +74,7 @@ select Sname,Sno from Student where Sno not in(select distinct Sno from Course i
 练习6
 select sum(Finnal_Table.Ccredit) from (select  Course.Ccredit,Course.Cpno as Cno,Sdept_Cno.Sdept from Course inner join (select distinct  SC.Cno,Student.Sdept from SC inner join Student on Student.Sno = SC.Sno) as Sdept_Cno on Sdept_Cno.Cno = Course.Cno union select  Course.Ccredit,Course.Cno,Sdept_Cno.Sdept from Course inner join (select distinct  SC.Cno,Student.Sdept from SC inner join Student on Student.Sno = SC.Sno) as Sdept_Cno on Sdept_Cno.Cno = Course.Cno)as Finnal_Table where Finnal_Table.Cno is not null group by Sdept;
 
+练习7
+select distinct SCno.Sno,SCno.Sname from Course inner join (select Student.Sno,Student.Sname,SC.Cno from Student inner join SC on Student.Sno=SC.Sno)as SCno on SCno.Cno=Course.Cno where Cpno is not null;
+select Sname,Sno from Student where Sno in(select distinct Sno from SC where Cno in(select Cno from Course where Cpno is not null));
 
