@@ -59,7 +59,7 @@ VALUES
 
 
 练习2
-SELECT * FROM Student WHERE Sname like 'liu%' order by Sno;
+SELECT Sname,Sno FROM Student WHERE Sname like 'liu%' order by Sno;
 
 练习3
 select Sage,Sex,Sdept from Student order by Sdept;
