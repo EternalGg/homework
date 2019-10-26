@@ -1,16 +1,15 @@
-create DATABASE SIAS;#创建表
-use SIAS#使用数据库
+练习1
+create DATABASE SIAS;
+use SIAS;
 
 CREATE TABLE IF NOT EXISTS Student(
 Sno INT UNSIGNED AUTO_INCREMENT,
-Sname VARVHAR(10) NOT NULL,
+Sname VARCHAR(10) NOT NULL,
 Sex VARCHAR(5) NOT NULL,
 Sage INT NOT NULL,
 Sdept VARCHAR(5) NOT NULL,
 PRIMARY KEY(Sno)
 )
-CHARSET=utf8;
-#创建学生表表
 
 CREATE TABLE IF NOT EXISTS Course(
 Cno INT UNSIGNED AUTO_INCREMENT,
@@ -19,8 +18,6 @@ Cpno INT,
 Ccredit INT NOT NULL,
 PRIMARY KEY(Cno)
 )
-CHARSET=utf8;
-#创建课程表
 
 CREATE TABLE IF NOT EXISTS SC(
 Sno INT UNSIGNED AUTO_INCREMENT,
@@ -30,12 +27,13 @@ foreign key(Sno) references Student(Sno)
 );
 
 INSERT INTO Student 
-(Sno, Sname, Ssex, Sage, Sdept)
+(Sno, Sname, Sex, Sage, Sdept)
 VALUES
 (201215121, "liyong", "male", 20, "CS"),
 (201215122, "liuchen", "fama", 19, "CS"),
 (201215123, "wangmin", "fama", 18, "MA"),
 (201215125, "zhangli", "male", 19, "IS");
+
 
 
 INSERT INTO Course 
@@ -58,8 +56,22 @@ VALUES
 (201215122, 2,90),
 (201215122, 3,80);
 
+
+
 练习2
-SELECT * FROM Student WHERE Sname like 'liu' order by Sno;
+SELECT * FROM Student WHERE Sname like 'liu%' order by Sno;
 
 练习3
-SELECT  FROM Student WHERE 
+select Sage,Sex,Sdept from Student order by Sdept;
+
+练习4
+select distinct SCno.Sno,SCno.Sname from Course inner join (select Student.Sno,Student.Sname,SC.Cno from Student inner join SC on Student.Sno=SC.Sno)as SCno on SCno.Cno=Course.Cno where Cpno is not null;
+
+练习5
+INSERT INTO SC (Sno, Cno, Grade)VALUES(201215123,6,98),(201215125,7,90);
+select Sname,Sno from Student where Sno not in(select distinct Sno from Course inner join (select Student.Sno,Student.Sname,SC.Cno from Student inner join SC on Student.Sno=SC.Sno)as SCno on SCno.Cno=Course.Cno where Cpno is not null);
+
+练习6
+select sum(Finnal_Table.Ccredit) from (select  Course.Ccredit,Course.Cpno as Cno,Sdept_Cno.Sdept from Course inner join (select distinct  SC.Cno,Student.Sdept from SC inner join Student on Student.Sno = SC.Sno) as Sdept_Cno on Sdept_Cno.Cno = Course.Cno union select  Course.Ccredit,Course.Cno,Sdept_Cno.Sdept from Course inner join (select distinct  SC.Cno,Student.Sdept from SC inner join Student on Student.Sno = SC.Sno) as Sdept_Cno on Sdept_Cno.Cno = Course.Cno)as Finnal_Table where Finnal_Table.Cno is not null group by Sdept;
+
+
